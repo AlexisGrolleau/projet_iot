@@ -39,7 +39,12 @@ if __name__ == '__main__':
             df = df_raw.loc[df_raw["end_device_id (OUT)"] == k]
             try:
                 df['payload (OUT)'] = df['payload (OUT)'].apply(eval(v))
-                payload_Total = str(k) + ",host=admin Temps=" + str(int(time.time()) * 100000000) + ",Temperature=26, rssi_dbm = 0, SNR_Db = 0"
-                r_Total = requests.post(url="http://localhost:8086/write?db=TrameLoRa", data=payload_Total)
+                time = str(int(time.time()) * 100000000)
+                for index, row in df.iterrows():
+                    rssi = str(row['rssi (OUT)'])
+                    snr = str(row['snr (OUT)'])
+                    payload_Total = str(k) + ",host=admin Temps=" + time + ",Temperature=26,rssi_dbm="+ rssi + ",SNR_Db=" + snr
+                    print(payload_Total)
+                    r_Total = requests.post(url="http://localhost:8086/write?db=TrameLoRa", data=payload_Total)
             except NameError as e:
                 print("Function name Error:", e)
