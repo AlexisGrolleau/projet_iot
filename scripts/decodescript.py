@@ -38,7 +38,7 @@ if __name__ == '__main__':
             df = df_raw.loc[df_raw["end_device_id (OUT)"] == k]
             try:
                 df['payload (OUT)'] = df['payload (OUT)'].apply(eval(v))
-                payload_Total = f"{k},host=admin Temps={str(int(time.time()) *100000000)},Temperature=26"
+                payload_Total = str(k) + ",host=admin Temps=" + str(int(time.time()) *100000000) + ",Temperature=26"
                 r_Total = requests.post(url="http://localhost:8086/write?db=TrameLoRa", data=payload_Total)
             except NameError as e:
                 print("Function name Error:", e)
