@@ -40,7 +40,7 @@ if __name__ == '__main__':
             try:
                 df['payload (OUT)'] = df['payload (OUT)'].apply(eval(v))
                 for index, row in df.iterrows():
-                    time = str(row['received_time (OUT)'] * 100000000)
+                    time = str(row['received_time (OUT)'] * 1000000000)
                     rssi = str(row['rssi_dbm (OUT)'])
                     snr = str(row['snr_db (OUT)'])
                     payload_Total = str(k) + ",host=admin Temps=" + time + ",Temperature=26,rssi_dbm="+ rssi + ",SNR_Db=" + snr
