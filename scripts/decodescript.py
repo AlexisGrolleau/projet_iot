@@ -27,8 +27,9 @@ if __name__ == '__main__':
     # Get the path to the current directory
     raw_directory = "/home/lora/projet_2022_2023/trameLoRaNonTraitee/"
     list_files = get_csv_files(raw_directory)
+    print(list_files)
     for file in list_files:
-        df_raw = read_csv(file)
+        df_raw = read_csv(raw_directory + file)
 
         # Extract the data from the DataFrame
         for k, v in dict_id.items():
@@ -37,4 +38,4 @@ if __name__ == '__main__':
                 df['payload (OUT)'] = df['payload (OUT)'].apply(eval(v))
                 print(df)
             except NameError as e:
-                print(f"Function name Error : ", e)
+                print("Function name Error:", e)
