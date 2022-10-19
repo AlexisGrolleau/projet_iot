@@ -3,6 +3,8 @@ import pandas as pd
 import base64
 from os import listdir
 from os.path import isfile, join
+import time
+import requests
 pd.options.mode.chained_assignment = None
 
 
@@ -22,7 +24,7 @@ def decode_AG(b):
 
 if __name__ == '__main__':
     # Add end_device_id and function to apply to the payload
-    dict_id = {"303636326B39820B": "decode_AG", "new_id": "function_payload"}
+    dict_id = {"303636326B39820B": "decode_AG"}
 
     # Get the path to the current directory
     raw_directory = "/home/lora/projet_2022_2023/trameLoRaNonTraitee/"
@@ -36,6 +38,7 @@ if __name__ == '__main__':
             df = df_raw.loc[df_raw["end_device_id (OUT)"] == k]
             try:
                 df['payload (OUT)'] = df['payload (OUT)'].apply(eval(v))
-                print(df)
+                payload_Total = f"{k},host=admin Temps={str(int(time.time()) *100000000)},Temperature=26"
+                r_Total = requests.post(url="http://localhost:8086/write?db=TrameLoRa", data=payload_Total)
             except NameError as e:
                 print("Function name Error:", e)
