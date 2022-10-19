@@ -37,4 +37,4 @@ if __name__ == '__main__':
                 df['payload (OUT)'] = df['payload (OUT)'].apply(eval(v))
                 print(df)
             except NameError as e:
-                print(f"Function name Error : {e}")
+                print(f"Function name Error : ", e)
